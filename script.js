@@ -1,11 +1,15 @@
 const TwoDArray = function(rows, columns) {
 
     const twoDArray = [];
-
+    
     function reset() {
         for (let i = 0; i < columns * rows; i++) {
             twoDArray[i] = i;
         }
+    }
+
+    function insert(row, column, value) {
+        this[column + (row * this.rows)] = value;
     }
 
     function retrieve(row, column) {
@@ -45,7 +49,7 @@ const TwoDArray = function(rows, columns) {
 
     reset();
 
-    return { reset, retrieve, getRow, getColumn, getDiagonals };
+    return { reset, insert, retrieve, getRow, getColumn, getDiagonals };
 }
 
 const Gameboard = (function () {
