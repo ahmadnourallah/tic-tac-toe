@@ -1,15 +1,15 @@
-const TwoDArray = function(rows, columns) {
+const Gameboard = (function(rows, columns) {
 
-    const twoDArray = [];
+    this.twoDArray = [];
     
     function reset() {
         for (let i = 0; i < columns * rows; i++) {
-            twoDArray[i] = i;
+            twoDArray[i] = null;
         }
     }
 
     function insert(row, column, value) {
-        this[column + (row * this.rows)] = value;
+        twoDArray[column + (row * rows)] = value;
     }
 
     function retrieve(row, column) {
@@ -47,33 +47,21 @@ const TwoDArray = function(rows, columns) {
         return { leftD, rightD };
     }    
 
-    reset();
-
-    return { reset, insert, retrieve, getRow, getColumn, getDiagonals };
-}
-
-const Gameboard = (function () {
-    const board = new TwoDArray(3, 3);
-
-    function reset() {
-        board.reset();
-    }
-
-    function placeSign(row, column, sign = "X") {
-        board.insert(row, column, sign);
+    function includes(value) {
+        return twoDArray.includes(value);
     }
 
     function getBoard() {
-        return board;
+        return twoDArray;
     }
 
-    return {reset, placeSign, getBoard};
+    reset();
 
-})();
+    return { reset, insert, retrieve, getRow, getColumn, getDiagonals, includes, getBoard };
+
+})(3, 3);
 
 const Player = function (name, sign) {
-    name = name;
-    sign = sign;
 
     function setName(n) {
         name = n;
