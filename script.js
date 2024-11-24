@@ -55,3 +55,27 @@ const Gameboard = (function () {
     return {reset, placeSign, getBoard};
 
 })();
+
+const Player = function (name, sign) {
+    name = name;
+    sign = sign;
+
+    function setName(n) {
+        name = n;
+    }
+
+    function setSign(s) {
+        sign = s;
+    }
+
+    function getName() {
+        return name;
+    }
+
+    function getSign() {
+        return sign;
+ 
+    }
+
+    return {setName, setSign, getName, getSign};
+}
