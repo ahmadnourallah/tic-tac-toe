@@ -36,3 +36,22 @@ TwoDArray.prototype.getColumn = function(column) {
 
     return retrievedColumn;
 }
+
+const Gameboard = (function () {
+    const board = new TwoDArray(3, 3);
+
+    function reset() {
+        board.reset();
+    }
+
+    function placeSign(row, column, sign = "X") {
+        board.insert(row, column, sign);
+    }
+
+    function getBoard() {
+        return board;
+    }
+
+    return {reset, placeSign, getBoard};
+
+})();
