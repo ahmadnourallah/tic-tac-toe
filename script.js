@@ -28,6 +28,21 @@ const TwoDArray = function(rows, columns) {
         return retrievedColumn;
     }
 
+    function getDiagonals() {
+        let leftD = [];
+        let rightD = [];
+    
+        for (let i = 0; i < twoDArray.length; i += rows + 1) {
+            leftD.push(twoDArray[i]);
+        }
+    
+        for (let i = rows - 1; i < twoDArray.length - 1; i += rows - 1) {
+            rightD.push(twoDArray[i]);
+        }
+    
+        return { leftD, rightD };
+    }    
+
     reset();
 
     return { reset, retrieve, getRow, getColumn, getDiagonals };
