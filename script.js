@@ -82,3 +82,57 @@ const Player = function (name, sign) {
 
     return {setName, setSign, getName, getSign};
 }
+
+const Game = (function () {
+    const players = {1: Player("X", "X"), 2: Player("O", "O")};
+    let turn = 1;
+
+    function changeTurn() {
+        turn = turn === 1 ? 2 : 1;
+    }
+
+    function checkWin(row, column) {
+        const currentRow = Gameboard.getRow(row);
+        const currentColumn = Gameboard.getColumn(column);
+        const { leftD, rightD } = Gameboard.getDiagonals();
+        const playersSign = players[turn].getSign();
+
+        function areSame(arr, value) {
+            return arr.every(item => value === item);
+        }
+
+        if (areSame(currentRow, playersSign) || areSame(currentColumn, playersSign) ||
+            areSame(leftD, playersSign) || areSame(rightD, playersSign)) {
+                
+            return true;
+        } 
+
+        return false;
+    }
+
+    function checkTie() {
+        
+        if (Gameboard.includes(null)) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    function playTurn(row, column) {
+        Gameboard.insert(row, column, players[turn].getSign());
+
+        if (checkTie()) {
+            console.log("Tie!");
+
+        } else if (checkWin(row, column)) {
+            console.log(`${players[turn].getName()} wins!`);
+
+        } else {
+            changeTurn();
+        }
+    }
+
+    return { playTurn };
+
+})();
