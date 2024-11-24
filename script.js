@@ -1,40 +1,36 @@
-function TwoDArray(rows, columns) {
-    this.rows = rows;
-    this.columns = columns;
+const TwoDArray = function(rows, columns) {
 
-    this.reset()
-}
+    const twoDArray = [];
 
-Object.setPrototypeOf(TwoDArray.prototype, Array.prototype);
-
-TwoDArray.prototype.reset = function () {
-    for (let i = 0; i < this.columns * this.rows; i++) {
-        this[i] = null;
-    }
-}
-
-TwoDArray.prototype.insert = function (row, column, value) {
-    this[column + (row * this.rows)] = value;
-}
-
-TwoDArray.prototype.retrieve = function (row, column) {
-    return this[column + (row * this.rows)];
-}
-
-TwoDArray.prototype.getRow = function(row) {
-    row = row * this.rows;
-
-    return this.slice(row, row + this.columns);
-}
-
-TwoDArray.prototype.getColumn = function(column) {
-    retrievedColumn = [];
-
-    for (let i = 0; i < this.rows; i++) {
-        retrievedColumn.push(this.getRow(i)[column]);
+    function reset() {
+        for (let i = 0; i < columns * rows; i++) {
+            twoDArray[i] = i;
+        }
     }
 
-    return retrievedColumn;
+    function retrieve(row, column) {
+        return twoDArray[column + (row * rows)];
+    }
+
+    function getRow(row) {
+        row = row * rows;
+
+        return twoDArray.slice(row, row + columns);
+    }
+
+    function getColumn(column) {
+        retrievedColumn = [];
+
+        for (let i = 0; i < rows; i++) {
+            retrievedColumn.push(getRow(i)[column]);
+        }
+
+        return retrievedColumn;
+    }
+
+    reset();
+
+    return { reset, retrieve, getRow, getColumn, getDiagonals };
 }
 
 const Gameboard = (function () {
