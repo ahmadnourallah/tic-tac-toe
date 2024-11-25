@@ -1,0 +1,16 @@
+:root { 
+    --primary-clr: #4C5C68;
+    --bg-clr: #C5C3C6;
+    --cell-clr: #EDEDEE;
+    --light-text-clr: #B0E4DB;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
