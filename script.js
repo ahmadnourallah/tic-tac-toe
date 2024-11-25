@@ -86,6 +86,7 @@ const Game = (function () {
 
     function changeTurn() {
         turn = turn === 1 ? 2 : 1;
+        Display.updateMessage(`Player ${players[turn].getSign()}'s turn`);
     }
 
     function checkWin(index) {
@@ -103,7 +104,6 @@ const Game = (function () {
 
         if (areSame(currentRow, playersSign) || areSame(currentColumn, playersSign) ||
             areSame(leftD, playersSign) || areSame(rightD, playersSign)) {
-                
             return true;
         } 
 
@@ -119,20 +119,76 @@ const Game = (function () {
         return true;
     }
 
-    function playTurn(index) {
-        Gameboard.insert(index, players[turn].getSign());
+    function playTurn(event) {
+        let index = event.target.dataset.index;
+        let sign = players[turn].getSign();
+        
+        // Play turn only if cell is empty (and if the target is a cell, not the grid)
+        if (Gameboard.retrieve(index) || !event.target.classList.contains("cell")) {
+            return;
+        };
 
-        if (checkTie()) {
-            console.log("Tie!");
+        Gameboard.insert(index, sign);
+        
+        Display.updateCell(event.target, sign);
 
-        } else if (checkWin(index)) {
-            console.log(`${players[turn].getName()} wins!`);
+        if (checkWin(index)) {
+            Display.updateMessage(`Player ${players[turn].getName()} has won!`);
+            Display.freeze();
+        
+        } else if (checkTie()) {
+            Display.updateMessage("It's a draw!");
 
         } else {
             changeTurn();
         }
     }
 
-    return { playTurn };
+    function restart() {
+        Gameboard.reset();
+        Display.render();
+        turn = 1;
+    }
+
+    return { playTurn, restart };
 
 })();
+
+const Display = (function () {
+
+    const messageDisplay = document.querySelector(".message");
+    const grid = document.querySelector(".grid");
+    const resetBtn = document.querySelector(".reset");
+
+
+    function render() {
+        resetBtn.addEventListener("click", Game.restart);
+        grid.addEventListener("click", Game.playTurn);
+        updateMessage("Player X's turn");
+        grid.replaceChildren();
+        
+        for (let i = 0; i < 9; i++) {
+            let cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.dataset.index = i;
+            grid.append(cell);
+        }
+    }
+
+    function freeze() {
+        grid.removeEventListener("click", Game.playTurn);
+    }
+
+    function updateMessage(message) {
+        messageDisplay.innerText = message;
+    }
+
+    function updateCell(cell, sign) {
+        cell.innerText = sign;
+    }
+
+    return { render, updateMessage, updateCell, freeze };
+
+})();
+
+Display.render();
