@@ -3,6 +3,8 @@
     --bg-clr: #C5C3C6;
     --cell-clr: #EDEDEE;
     --light-text-clr: #B0E4DB;
+    --dark-text-clr: #46494B;
+    --border-clr: #2a3a46;
 }
 
 *,
@@ -13,4 +15,77 @@
 
 * {
     margin: 0;
+}
+
+body {
+    font-family: "Varela Round", sans-serif;
+    background-color: var(--bg-clr);
+}
+
+nav {
+    background-color: var(--primary-clr);
+    text-align: center;
+    padding: 1.5rem 0;
+    color: var(--light-text-clr);
+    font-size: 6rem;
+    font-weight: 800;
+    border-bottom: 3px solid var(--border-clr);
+    margin-bottom: 2rem;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+main .message {
+    color: var(--dark-text-clr);
+    font-size: 3rem;
+    font-weight: 500;
+}
+
+main .grid {
+    width: 450px;
+    height: 450px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: var(--cell-clr);
+    border: 2px solid var(--border-clr);
+}
+
+main .grid .cell {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: inherit;
+    border: 1px solid var(--border-clr);
+    color: var(--dark-text-clr);
+    font-size: 5rem;
+}
+
+main .grid .cell:hover {
+    filter: brightness(95%);
+}
+
+main .reset {
+    cursor: pointer;
+    border: 3px solid var(--border-clr);
+    border-radius: 5px;
+    background-color: var(--primary-clr);
+    font-size: 3rem;
+    padding: 0.5rem 1.5rem;
+    color: var(--light-text-clr);
+}
+
+main .reset:hover {
+    filter: brightness(80%);
+}
+
+main .reset:active {
+    background-color: var(--border-clr);
 }
