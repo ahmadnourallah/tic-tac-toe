@@ -8,13 +8,11 @@ const Gameboard = (function(rows, columns) {
         }
     }
 
-    function insert(row, column, value) {
-        twoDArray[column + (row * rows)] = value;
+    function insert(index, value) {
+        twoDArray[index] = value;
     }
 
-    function retrieve(row, column) {
-        return twoDArray[column + (row * rows)];
-    }
+    const retrieve = index => twoDArray[index];
 
     function getRow(row) {
         row = row * rows;
@@ -47,17 +45,16 @@ const Gameboard = (function(rows, columns) {
         return { leftD, rightD };
     }    
 
-    function includes(value) {
-        return twoDArray.includes(value);
-    }
-
-    function getBoard() {
-        return twoDArray;
-    }
+    const includes = value => twoDArray.includes(value);
+    const getBoard = () => twoDArray;
+    const getRows = () => rows;
+    const getColumns = () => columns;
 
     reset();
 
-    return { reset, insert, retrieve, getRow, getColumn, getDiagonals, includes, getBoard };
+    return { reset, insert, retrieve, 
+        getRow, getColumn, getDiagonals, 
+        includes, getBoard, getRows, getColumns };
 
 })(3, 3);
 
@@ -91,7 +88,10 @@ const Game = (function () {
         turn = turn === 1 ? 2 : 1;
     }
 
-    function checkWin(row, column) {
+    function checkWin(index) {
+        const rows = Gameboard.getRows();
+        const row = Math.floor(index / rows);
+        const column = Math.floor(index / rows) + 1;
         const currentRow = Gameboard.getRow(row);
         const currentColumn = Gameboard.getColumn(column);
         const { leftD, rightD } = Gameboard.getDiagonals();
@@ -119,13 +119,13 @@ const Game = (function () {
         return true;
     }
 
-    function playTurn(row, column) {
-        Gameboard.insert(row, column, players[turn].getSign());
+    function playTurn(index) {
+        Gameboard.insert(index, players[turn].getSign());
 
         if (checkTie()) {
             console.log("Tie!");
 
-        } else if (checkWin(row, column)) {
+        } else if (checkWin(index)) {
             console.log(`${players[turn].getName()} wins!`);
 
         } else {
