@@ -68,6 +68,20 @@ main .grid .cell {
     font-size: 5rem;
 }
 
+main .grid .cell span.animated {
+    animation: popup .2s;
+}
+
+@keyframes popup {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 main .grid .cell:hover {
     filter: brightness(95%);
 }

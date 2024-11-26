@@ -171,6 +171,8 @@ const Display = (function () {
             let cell = document.createElement("div");
             cell.classList.add("cell");
             cell.dataset.index = i;
+            let span = document.createElement("span");
+            cell.append(span);
             grid.append(cell);
         }
     }
@@ -184,7 +186,9 @@ const Display = (function () {
     }
 
     function updateCell(cell, sign) {
-        cell.innerText = sign;
+        let cellSpan = cell.firstChild;
+        cellSpan.classList.add("animated");
+        cellSpan.innerText = sign;
     }
 
     return { render, updateMessage, updateCell, freeze };
