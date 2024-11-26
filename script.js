@@ -92,7 +92,18 @@ const Game = (function () {
     function checkWin(index) {
         const rows = Gameboard.getRows();
         const row = Math.floor(index / rows);
-        const column = Math.floor(index / rows) + 1;
+        let column;
+
+        if (index % rows === 0) {
+            column = 0;
+        
+        } else if ((index - 1) % rows === 0) {
+            column = 1;
+        
+        } else if ((index - 2) % rows === 0) {
+            column = 2;
+        }
+        
         const currentRow = Gameboard.getRow(row);
         const currentColumn = Gameboard.getColumn(column);
         const { leftD, rightD } = Gameboard.getDiagonals();
